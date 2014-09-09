@@ -1,0 +1,3 @@
+(do
+  (def square (lambda (x) (* x x)))
+  (square 16))
