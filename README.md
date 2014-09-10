@@ -20,6 +20,19 @@ dev    | [![Circle CI](https://circleci.com/gh/ndhoule/lame/tree/dev.png?style=b
 I wanted to write a lexer and a compiler. And a language. And a cure for world hunger. Okay, just a language.
 
 
+## Installation and Use
+
+```sh
+npm install git+https://github.com/ndhoule/lame.git#dev
+```
+
+### REPL
+
+```sh
+node_modules/.bin/lame-repl
+```
+
+
 ## Development
 
 Requirements:
