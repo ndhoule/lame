@@ -50,108 +50,88 @@ var getFirstNonWhitespaceIndex = function(string, cursor = 0) {
 };
 
 /**
- * Creates a lexer instance.
- *
- * @class Lexer
- * @return {Lexer}
- */
-export default class Lexer {
-  /**
-   * Accepts a string and a `start` index, and returns the first token from the string.
-   *
-   * @memberof Lexer
-   * @function getTokenBoundaries
-   * @param {string} string The string to search for a token.
-   * @param {number} start The index at which to start searching the `string`.
-   * @return {Array} A pair of indices in `[start, end]` format, where `start` is the first index of
-   * the token, and `end` is the last index of the token in the `string`.
-   */
-  getTokenBoundaries(string, start = 0) {
-    // Consume any leading whitespace from the input string
-    start = getFirstNonWhitespaceIndex(string, start);
+  * Accepts a string and a `start` index, and returns the first token from the string.
+  *
+  * @function getNextTokenBoundaries
+  * @param {string} string The string to search for a token.
+  * @param {number} start The index at which to start searching the `string`.
+  * @return {Array} A pair of indices in `[start, end]` format, where `start` is the first index of
+  * the token, and `end` is the last index of the token in the `string`.
+  */
 
-    var end = start;
-    var char = string.charCodeAt(end);
-    var inStringLiteral = false;
+var getNextTokenBoundaries = function(string, start = 0) {
+  // Consume any leading whitespace from the input string
+  start = getFirstNonWhitespaceIndex(string, start);
 
-    // Check for a single parenthetical and return early if possible
-    if (char === LEFT_PARENTHESIS || char === RIGHT_PARENTHESIS) {
-      return [start, start + 1];
-    }
+  var end = start;
+  var char = string.charCodeAt(end);
+  var inStringLiteral = false;
 
-    while (end < string.length) {
-      if (inStringLiteral) {
-        // Is a string literal, special rule mode
-        if (char === DOUBLE_QUOTE && string.charCodeAt(end - 1) !== ESCAPE) {
-          // Is terminal quote (end of string literal) and is not escaped
-          end += 1;
-          break;
-        }
-      } else {
-        // Not a string literal, normal rules apply
-        if (char === DOUBLE_QUOTE) {
-          // Begin string literal
-          inStringLiteral = true;
-        } else if (char === SINGLE_QUOTE) {
-          // Begin `quot`ed form
-          end += 1;
-          break;
-        } else if (isWhitespace(char)) {
-          // Whitespace indicates a token boundary
-          break;
-        } else if (char === RIGHT_PARENTHESIS) {
-          // Close paren indicates the boundary of a token
-          break;
-        }
+  // Check for a single parenthetical and return early if possible
+  if (char === LEFT_PARENTHESIS || char === RIGHT_PARENTHESIS) {
+    return [start, start + 1];
+  }
+
+  while (end < string.length) {
+    if (inStringLiteral) {
+      // Is a string literal, special rule mode
+      if (char === DOUBLE_QUOTE && string.charCodeAt(end - 1) !== ESCAPE) {
+        // Is terminal quote (end of string literal) and is not escaped
+        end += 1;
+        break;
       }
-
-      // Advance cursor and move onto next character
-      end += 1;
-      char = string.charCodeAt(end);
+    } else {
+      // Not a string literal, normal rules apply
+      if (char === DOUBLE_QUOTE) {
+        // Begin string literal
+        inStringLiteral = true;
+      } else if (char === SINGLE_QUOTE) {
+        // Begin `quot`ed form
+        end += 1;
+        break;
+      } else if (isWhitespace(char)) {
+        // Whitespace indicates a token boundary
+        break;
+      } else if (char === RIGHT_PARENTHESIS) {
+        // Close paren indicates the boundary of a token
+        break;
+      }
     }
 
-    return [start, end];
+    // Advance cursor and move onto next character
+    end += 1;
+    char = string.charCodeAt(end);
   }
 
-  /**
-   * Transforms a string into a list of tokens.
-   *
-   * @function tokenize
-   * @memberof Lexer
-   * @param {string} string The string to tokenize.
-   * @return {Array} An array of tokens.
-   */
-  tokenize(string) {
-    var end, token;
-    var start = 0;
-    var tokens = [];
-
-    while (start < string.length) {
-      // Get the start and end indices of a token
-      [start, end] = this.getTokenBoundaries(string, start);
-      // Get the token and add it to the output list
-      token = string.substring(start, end);
-      // Guard against empty tokens
-      // FIXME: Not sure why this happens, but there's probably a better way to avoid it
-      token && tokens.push(token);
-      // Reset cursor for next token
-      start = end;
-    }
-
-    return tokens;
-  }
-}
+  return [start, end];
+};
 
 /**
- * Provide a shorthand for tokenizing strings. Most of the time this is what you want; instantiating
- * an instance of `lexer` manually right now isn't terribly useful.
- *
- * @function tokenize
- * @memberof Lexer
- * @param {string} string The string tokenize.
- * @return {Array} An array of tokens.
- */
-Lexer.tokenize = function(string) {
-  var lexer = new Lexer();
-  return lexer.tokenize(string);
+  * Transforms a string into a list of tokens.
+  *
+  * @function tokenize
+  * @memberof Lexer
+  * @param {string} string The string to tokenize.
+  * @return {Array} An array of tokens.
+  */
+var tokenize = function (string) {
+  var end, token;
+  var start = 0;
+  var tokens = [];
+
+  while (start < string.length) {
+    // Get the start and end indices of a token
+    [start, end] = getNextTokenBoundaries(string, start);
+    // Get the token and add it to the output list
+    token = string.substring(start, end);
+    // Guard against empty tokens
+    // FIXME: Not sure why this happens, but there's probably a better way to avoid it
+    token && tokens.push(token);
+    // Reset cursor for next token
+    start = end;
+  }
+
+  return tokens;
 };
+
+export default { tokenize };
