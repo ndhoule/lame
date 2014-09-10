@@ -142,6 +142,15 @@ export default class Lexer {
   }
 }
 
+/**
+ * Provide a shorthand for tokenizing strings. Most of the time this is what you want; instantiating
+ * an instance of `lexer` manually right now isn't terribly useful.
+ *
+ * @function tokenize
+ * @memberof Lexer
+ * @param {string} string The string tokenize.
+ * @return {Array} An array of tokens.
+ */
 Lexer.tokenize = function(string) {
   var lexer = new Lexer();
   return lexer.tokenize(string);
