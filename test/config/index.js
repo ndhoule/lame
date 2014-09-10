@@ -10,7 +10,7 @@ chai.loadFixture = (function() {
 
   return function(filename) {
     if (!cache.hasOwnProperty(filename)) {
-      cache[filename] = fs.readFileSync(path.join(__dirname, '../fixtures', filename + '.minl'), 'utf-8');
+      cache[filename] = fs.readFileSync(path.join(__dirname, '../fixtures', filename + '.lame'), 'utf-8');
     }
     return cache[filename];
   };
