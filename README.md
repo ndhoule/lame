@@ -15,9 +15,13 @@ master | [![Circle CI](https://circleci.com/gh/ndhoule/lame/tree/master.png?styl
 dev    | [![Circle CI](https://circleci.com/gh/ndhoule/lame/tree/dev.png?style=badge)](https://circleci.com/gh/ndhoule/lame/tree/dev)
 
 
-## Why?
+### Why?
 
 I wanted to write a lexer and a compiler. And a language. And a cure for world hunger. Okay, just a language.
+
+### Disclaimer
+
+Sweet Jesus, please don't use this for anything important.
 
 
 ## Installation and Use
@@ -43,10 +47,6 @@ Requirements:
 ```sh
 npm install
 ```
-
-## Disclaimer
-
-Sweet Jesus, please don't use this for anything important.
 
 
 ## License
