@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » if', function() {
   it('should evaluate the first form if the predicate function returns a truthy value', function() {

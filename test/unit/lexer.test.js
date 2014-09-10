@@ -1,4 +1,4 @@
-import Lexer from '../../lib/lexer';
+import Lexer from '../../src/lexer';
 
 describe('lexer', function() {
   it('should be a function', function() {

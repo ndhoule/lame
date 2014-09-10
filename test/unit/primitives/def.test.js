@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » def', function() {
   it('should evaluate a variable into the root context', function() {

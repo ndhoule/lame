@@ -1,4 +1,4 @@
-import lame from '../../lib/index';
+import lame from '../../src/index';
 
 describe('core » types', function() {
   describe('booleans', function() {

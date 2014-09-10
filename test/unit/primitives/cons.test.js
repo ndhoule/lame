@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » cons', function() {
   it('should `cons` an element onto the head of another list', function() {

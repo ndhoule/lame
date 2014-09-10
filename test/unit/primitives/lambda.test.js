@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » lambda', function() {
   it('should compile a lamba expression', function() {

@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » quote', function() {
   it('should prevent evaluation of a form', function() {

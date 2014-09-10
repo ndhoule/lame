@@ -1,4 +1,4 @@
-import lame from '../../../lib/index';
+import lame from '../../../src/index';
 
 describe('primitives » do', function() {
   it('should evaluate all forms given to it', function() {
