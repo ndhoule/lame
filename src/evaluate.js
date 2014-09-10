@@ -43,7 +43,7 @@ var evaluate = function(x, context = globalContext) {
     value,
     variable;
 
-  if (isSymbol(x)) {
+  if (isSymbol(x) && x[0] !== '"') {
     return context.find(x)[x];
   }
 
