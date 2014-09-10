@@ -7,6 +7,13 @@
 
 Miniature Lisp implementation written in JavaScript (ES6).
 
+###### Build Status
+
+Branch | Status
+---    | ---
+master | [![Circle CI](https://circleci.com/gh/ndhoule/lame/tree/master.png?style=badge)](https://circleci.com/gh/ndhoule/lame/tree/master)
+dev    | [![Circle CI](https://circleci.com/gh/ndhoule/lame/tree/dev.png?style=badge)](https://circleci.com/gh/ndhoule/lame/tree/dev)
+
 
 ## Why?
 
