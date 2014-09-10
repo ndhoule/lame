@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+// Bootstrap a Traceur environment
+require('../bootstrap');
+require('./repl.js');

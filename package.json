@@ -17,6 +17,9 @@
   "scripts": {
     "test": "make test"
   },
+  "bin": {
+    "lame-repl": "./bin/lame-repl"
+  },
   "dependencies": {
     "lodash": "^2.4.1",
     "lodash.assign": "^2.4.1",
