@@ -64,7 +64,7 @@ describe('lexer', function() {
   });
 
   describe('comments', function() {
-    var ownlineCode = chai.loadFixture('lexer/comments-inline');
+    var ownlineCode = chai.loadFixture('lexer/comments-ownline');
     var inlineCode = chai.loadFixture('lexer/comments-inline');
     var expected = ['(', 'def', 'square', '(', 'lambda', '(', 'x', ')', '(', '*', 'x', 'x', ')', ')', ')'];
 
