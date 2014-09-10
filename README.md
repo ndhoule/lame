@@ -3,9 +3,9 @@
 ![Lisp](https://sslimgs.xkcd.com/comics/lisp.jpg)
 *Copyright Randall Munroe, [xkcd.com](https://xkcd.com)*
 
------
-
 Miniature Lisp implementation written in JavaScript (ES6).
+
+-----
 
 ###### Build Status
 
