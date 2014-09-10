@@ -5,11 +5,11 @@ MOCHA = ./node_modules/.bin/mocha
 TEST_DIR = ./test
 
 MOCHA_COMMON_FLAGS = \
+	--require ./bootstrap \
 	--reporter spec \
 	--ui bdd \
 	--check-leaks \
 	--compilers js:mocha-traceur \
-	--require ./bootstrap \
 	--require $(TEST_DIR)/config
 
 test:
