@@ -17,7 +17,6 @@ I wanted to write a lexer and a compiler. And a language. And a cure for world h
 
 Requirements:
 - Node.js v0.10.x
-- A sense of humor/patience
 
 ### Getting Started
 
