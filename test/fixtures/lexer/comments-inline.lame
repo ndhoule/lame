@@ -1,0 +1,4 @@
+; This is a comment to EOL.
+(def square ; (def commented-out 100
+  (lambda (x) ; check out this sweet inline comment...
+    (* x x))) ; you can't beat "inline" comments ; ;;

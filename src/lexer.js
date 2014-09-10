@@ -2,7 +2,7 @@
  * Special Characters
  */
 
-var LINE_BREAK = 10;
+var LINE_FEED = 10;
 var CARRIAGE_RETURN = 13;
 var SPACE = 32;
 var DOUBLE_QUOTE = 34;
@@ -10,6 +10,7 @@ var SINGLE_QUOTE = 39;
 var LEFT_PARENTHESIS = 40;
 var RIGHT_PARENTHESIS = 41;
 var COMMA = 44;
+var SEMICOLON = 59;
 var ESCAPE = 92;
 
 /**
@@ -21,7 +22,7 @@ var ESCAPE = 92;
  */
 var isWhitespace = (function() {
   var WHITESPACE = Object.create(null);
-  WHITESPACE[LINE_BREAK] = true;
+  WHITESPACE[LINE_FEED] = true;
   WHITESPACE[CARRIAGE_RETURN] = true;
   WHITESPACE[SPACE] = true;
   WHITESPACE[COMMA] = true;
@@ -30,6 +31,25 @@ var isWhitespace = (function() {
     return code in WHITESPACE;
   };
 }());
+
+/**
+ * TODO
+ *
+ * @return {undefined}
+ */
+var isEOL = (function() {
+  var EOL = Object.create(null);
+  EOL[LINE_FEED] = true;
+  EOL[CARRIAGE_RETURN] = true;
+
+  return function(code) {
+    return code in EOL;
+  };
+}());
+
+// TODO
+var consumeUntil = function(predicate, string, cursor = 0) {
+};
 
 /**
  * Accepts a string and a numeric index (cursor), and fast-forwards through a string until a
@@ -66,6 +86,27 @@ var getNextTokenBoundaries = function(string, start = 0) {
   var end = start;
   var char = string.charCodeAt(end);
   var inStringLiteral = false;
+
+  // Comment, consume until line ends
+  if (char === SEMICOLON) {
+    while(end < string.length) {
+      if (isEOL(char)) {
+        end += 1;
+
+        if (char === LINE_FEED && string.charCodeAt(end + 1) === CARRIAGE_RETURN) {
+          // Is a Windows-style (\r\n) newline, consume extra character
+          end += 1;
+        }
+
+        break;
+      }
+
+      end += 1;
+      char = string.charCodeAt(end);
+    }
+
+    return [start, end];
+  }
 
   // Check for a single parenthetical and return early if possible
   if (char === LEFT_PARENTHESIS || char === RIGHT_PARENTHESIS) {
@@ -124,9 +165,11 @@ var tokenize = function (string) {
     [start, end] = getNextTokenBoundaries(string, start);
     // Get the token and add it to the output list
     token = string.substring(start, end);
-    // Guard against empty tokens
-    // FIXME: Not sure why this happens, but there's probably a better way to avoid it
-    token && tokens.push(token);
+    // Guard against empty tokens and discard comments
+    // FIXME: Not sure empty token problem happens, but there's probably a better way to avoid it
+    if (token !== '' && token.charCodeAt(0) !== SEMICOLON) {
+      tokens.push(token);
+    }
     // Reset cursor for next token
     start = end;
   }
