@@ -9,6 +9,7 @@ MOCHA_COMMON_FLAGS = \
 	--ui bdd \
 	--check-leaks \
 	--compilers js:mocha-traceur \
+	--require ./bootstrap \
 	--require $(TEST_DIR)/config
 
 test:
