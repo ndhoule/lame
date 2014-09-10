@@ -27,7 +27,7 @@ npm install
 
 ## Disclaimer
 
-Zeus' beard! Please don't use this for anything important.
+Sweet Jesus, please don't use this for anything important.
 
 
 ## License
