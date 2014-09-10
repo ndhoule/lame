@@ -48,6 +48,12 @@ describe('lexer', function() {
       it('should handle escaped internal quotes', function() {
         expect(Lexer.tokenize('"you shall \\"not\\" pass"')).to.deep.equal(['"you shall \\"not\\" pass"']);
       });
+
+      it('should handle parentheses within quotes', function() {
+        expect(Lexer.tokenize('"you shall (not) pass"')).to.deep.equal(['"you shall (not) pass"']);
+        expect(Lexer.tokenize('"you shall ))not( pass"')).to.deep.equal(['"you shall ))not( pass"']);
+        expect(Lexer.tokenize('"you shall (((()) not pass"')).to.deep.equal(['"you shall (((()) not pass"']);
+      });
     });
 
     describe('symbols', function() {
@@ -57,8 +63,15 @@ describe('lexer', function() {
     });
   });
 
+  describe('quoting', function() {
+    it('should allow quoting of forms', function() {
+      expect(Lexer.tokenize('(cons 1 \'(2))')).to.deep.equal(['(', 'cons', '1', '\'', '(', '2', ')', ')']);
+      expect(Lexer.tokenize('(cons 1 \'    ( 2))')).to.deep.equal(['(', 'cons', '1', '\'', '(', '2', ')', ')']);
+    });
+  });
+
   describe('parentheses', function() {
-    it('it should handle empty parentheses', function() {
+    it('should handle empty parentheses', function() {
       expect(Lexer.tokenize('()')).to.deep.equal(['(', ')']);
       expect(Lexer.tokenize('(())')).to.deep.equal(['(', '(', ')', ')']);
       expect(Lexer.tokenize('( ( ) )')).to.deep.equal(['(', '(', ')', ')']);
@@ -68,37 +81,66 @@ describe('lexer', function() {
       expect(Lexer.tokenize('(')).to.deep.equal(['(']);
       expect(Lexer.tokenize('())')).to.deep.equal(['(', ')', ')']);
       expect(Lexer.tokenize('((')).to.deep.equal(['(', '(']);
+      expect(Lexer.tokenize(')(')).to.deep.equal([')', '(']);
     });
 
     it('should handle parentheses with contents', function() {
-      expect(Lexer.tokenize('(list 1 2 3)')).to.deep.equal(['(', 'list', '1', '2', '3', ')']);
+      var code = '(list 1 2 3)';
+      var expected = ['(', 'list', '1', '2', '3', ')'];
 
+      expect(Lexer.tokenize(code)).to.deep.equal(expected);
+    });
+
+    it('should handle parentheses with nested parentheses', function() {
       var code = '(list 1 2 (quot (3)))';
       var expected = ['(', 'list', '1', '2', '(', 'quot', '(',  '3', ')', ')', ')'];
+
       expect(Lexer.tokenize(code)).to.deep.equal(expected);
     });
   });
 
-  xdescribe('whitespace', function() {
-    xit('should ignore spaces', function() {
+  describe('whitespace', function() {
+    it('should ignore spaces', function() {
+      expect(Lexer.tokenize('      ')).to.have.length(0);
     });
 
-    xit('should ignore newlines', function() {
+    it('should ignore commas', function() {
+      var code = chai.loadFixture('lexer/whitespace-commas');
+      var expected = ['(', 'list', '1', '2', '3', ')'];
+
+      expect(Lexer.tokenize(code)).to.deep.equal(expected);
     });
 
-    xit('should ignore commas', function() {
+    it('should ignore newlines', function() {
+      var code = chai.loadFixture('lexer/whitespace-newlines');
+      var expected = ['(', 'do', '(', 'eq', '1', '2', ')', '(', 'print', '"omg"', ')', ')'];
+
+      expect(Lexer.tokenize(code)).to.deep.equal(expected);
     });
 
-    xit('should ignore carriage returns', function() {
+    it('should ignore dos-style newlines', function() {
+      var code = chai.loadFixture('lexer/whitespace-dos-newlines');
+      var expected = ['(', 'do', '(', 'eq', '1', '2', ')', '(', 'print', '"omg"', ')', ')'];
+
+      expect(Lexer.tokenize(code)).to.deep.equal(expected);
     });
 
-    xit('should ignore leading whitespace', function() {
+    it('should ignore leading whitespace', function() {
+      expect(Lexer.tokenize('\n()')).to.deep.equal(['(', ')']);
+      expect(Lexer.tokenize('\r\n()')).to.deep.equal(['(', ')']);
     });
 
-    xit('should ignore trailing whitespace', function() {
+    it('should ignore trailing whitespace', function() {
+      expect(Lexer.tokenize('()\n')).to.deep.equal(['(', ')']);
+      expect(Lexer.tokenize('()\r\n')).to.deep.equal(['(', ')']);
+      expect(Lexer.tokenize('() \n   ')).to.deep.equal(['(', ')']);
+      expect(Lexer.tokenize('() \r\n   ')).to.deep.equal(['(', ')']);
     });
 
-    xit('should ignore inner whitespace', function() {
+    it('should ignore inner whitespace', function() {
+      expect(Lexer.tokenize('(+\n 1 2)\n')).to.deep.equal(['(', '+', '1', '2', ')']);
+      expect(Lexer.tokenize('(+\n 1\r2)\n')).to.deep.equal(['(', '+', '1', '2', ')']);
+      expect(Lexer.tokenize('(+\r\n 1    \r2  )\n')).to.deep.equal(['(', '+', '1', '2', ')']);
     });
   });
 });
