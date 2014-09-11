@@ -1,6 +1,7 @@
+; At the moment
 (do
   (def square
     ; Squares a number.
-    (lambda (x)(* x x)))
+    (lambda (x) (* x x)))
 
   (square 2))
