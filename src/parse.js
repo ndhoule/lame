@@ -8,6 +8,13 @@ var isNumeric = function(string) {
   return !isNaN(Number(string));
 };
 
+/**
+ * Accepts a string and converts it to its appropriate datatype.
+ *
+ * @function atomize
+ * @param {*} token The token to convert to an atom.
+ * @return {LAtom} An atom.
+ */
 // This would be a lot goddamned easier if the lexer did more work
 // TODO: Make the lexer do more goddamned work for us
 var atomize = function(token) {
@@ -22,7 +29,15 @@ var atomize = function(token) {
   }
 };
 
-// Reads an expression from a list of tokens.
+/**
+ * Parses an s-expression from a list of one or more tokens.
+ *
+ * @function parse
+ * @param {Array.<string>} tokens A list of tokens to parse.
+ * @return {Array.<LAtom>|LAtom} An atom or list of atoms, parsed from the input `tokens`. Atoms can
+ * be one of any types listed in `types.js`.
+ */
+// TODO: Missing opening parens don't throw an unmatched delimiter error
 var parse = function(tokens) {
   if (!tokens.length) {
     throw new Error('Unexpected EOF');
@@ -47,7 +62,7 @@ var parse = function(tokens) {
 
     return list;
   } else if (token === ')') {
-    throw new SyntaxError('Unexpected )');
+    throw new SyntaxError(`Unmatched delimiter: ${token}`);
   } else {
     return atomize(token);
   }
