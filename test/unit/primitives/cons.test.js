@@ -1,6 +1,6 @@
 import lame from '../../../src/index';
 
-describe('primitives » cons', function() {
+describe('core » s-functions » cons', function() {
   it('should `cons` an element onto the head of another list', function() {
     var code = '(cons 1 (list 2))';
     var results = lame.eval(code);

@@ -8,6 +8,5 @@ describe('primitives » def', function() {
     expect(result).to.equal(256);
   });
 
-  xit('should evaluate a variable into its current lexical scope', function() {
-  });
+  xit('should evaluate a variable into its current lexical scope', function() {});
 });

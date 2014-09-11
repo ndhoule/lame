@@ -47,10 +47,6 @@ var isEOL = (function() {
   };
 }());
 
-// TODO
-var consumeUntil = function(predicate, string, cursor = 0) {
-};
-
 /**
  * Accepts a string and a numeric index (cursor), and fast-forwards through a string until a
  * non-whitespace character is found. Returns the index at which that character can be found.
