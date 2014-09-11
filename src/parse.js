@@ -38,11 +38,11 @@ var parse = function(tokens) {
     throw new Error('Unexpected EOF');
   }
 
-  var token = tokens.shift();
-
-  if (token === '') {
+  if (tokens[0] === '') {
     throw new SyntaxError('Unexpected empty token');
   }
+
+  var token = tokens.shift();
 
   // Expand shorthand quote forms, e.g. '(1 2 3) => (quot (1 2 3))
   if (token === '\'') {
