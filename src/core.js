@@ -29,3 +29,5 @@ export var cons = (a, b) => {
 
   return [a, ...b];
 };
+
+export var type = (value) => value._type;

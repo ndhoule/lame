@@ -26,7 +26,8 @@ var globalContext = Context({
   'cons': core.cons,
   'first': core.first,
   'rest': core.rest,
-  'list': core.list
+  'list': core.list,
+  'type': core.type
 });
 
 /**
