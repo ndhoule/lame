@@ -1,0 +1,6 @@
+(do
+  (def square
+    ; Squares a number.
+    (lambda (x)(* x x)))
+
+  (square 2))

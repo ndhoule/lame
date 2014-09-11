@@ -33,7 +33,7 @@ npm install git+https://github.com/ndhoule/lame.git#dev
 ### REPL
 
 ```sh
-node_modules/.bin/lame-repl
+node_modules/.bin/lamer
 ```
 
 
