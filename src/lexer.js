@@ -143,6 +143,18 @@ var getNextTokenBoundaries = function(string, start = 0) {
   return [start, end];
 };
 
+// TODO: Move to utility file
+/**
+ * Predicate function that determines if a value is a string.
+ *
+ * @function isString
+ * @param {*} val The value to test.
+ * @return {boolean} Returns true if `val` is a string, and false otherwise.
+ */
+var isString = function(val) {
+  return typeof val === 'string' || Object.prototype.toString.call(val) === '[object String]';
+};
+
 /**
   * Transforms a string into a list of tokens.
   *
@@ -151,14 +163,22 @@ var getNextTokenBoundaries = function(string, start = 0) {
   * @param {string} string The string to tokenize.
   * @return {Array} An array of tokens.
   */
-var tokenize = function (string) {
+var tokenize = function(string) {
   var end, token;
   var start = 0;
   var tokens = [];
 
+  if (!isString(string)) {
+    throw new Error('Input is not a string.');
+  }
+
   while (start < string.length) {
-    // Get the start and end indices of a token
-    [start, end] = getNextTokenBoundaries(string, start);
+    try {
+      // Get the start and end indices of a token
+      [start, end] = getNextTokenBoundaries(string, start);
+    } catch (e) {
+      throw new Error('TODO: Provide helpful error here');
+    }
     // Get the token and add it to the output list
     token = string.substring(start, end);
     // Guard against empty tokens and discard comments
