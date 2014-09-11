@@ -1,11 +1,24 @@
-var atom = function(token) {
-  if (token === 'true') {
-    return true;
-  } else if (token === 'false') {
-    return false;
+import { LBoolean, LNumber, LString, LSymbol } from './types';
+
+var isStringLiteral = function(string) {
+  return string[0] === '"' && string[string.length - 1] === '"';
+};
+
+var isNumeric = function(string) {
+  return !isNaN(Number(string));
+};
+
+// This would be a lot goddamned easier if the lexer did more work
+// TODO: Make the lexer do more goddamned work for us
+var atomize = function(token) {
+  if (token === 'true' || token === 'false') {
+    return new LBoolean(token);
+  } else if (isStringLiteral(token)) {
+    return new LString(token);
+  } else if (isNumeric(token)) {
+    return new LNumber(token);
   } else {
-    var int = parseFloat(token);
-    return isNaN(Number(int)) ? token : int;
+    return new LSymbol(token);
   }
 };
 
@@ -31,7 +44,7 @@ var parse = function(tokens) {
   } else if (token === ')') {
     throw new TypeError('Unexpected )');
   } else {
-    return atom(token);
+    return atomize(token);
   }
 };
 

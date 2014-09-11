@@ -2,10 +2,15 @@ import * as core from './core';
 import Context from './context';
 import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
+import { LAtom, LSymbol } from './types';
 
-var isSymbol = function(exp) {
-  return exp instanceof String || Object.prototype.toString.call(exp) === '[object String]';
-};
+var equal = LAtom.equal;
+
+var _quote = new LSymbol('quote');
+var _if = new LSymbol('if');
+var _def = new LSymbol('def');
+var _lambda = new LSymbol('lambda');
+var _do = new LSymbol('do');
 
 // Create a global context with primitive globals.
 var globalContext = Context({
@@ -27,8 +32,8 @@ var globalContext = Context({
 /**
  * Evaluates an expression in a context.
  *
- * @param {Array|number|string} expr The expression to evaluate.
- * @param {Context} [context = globalContext] The context in which to evaluate the `expr`ession.
+ * @param {Array|number|string} x The expression to evaluate.
+ * @param {Context} [context=globalContext] The context in which to evaluate the expression.
  * @return {*} The results of invoking the expression.
  */
 var evaluate = function(x, context = globalContext) {
@@ -43,7 +48,7 @@ var evaluate = function(x, context = globalContext) {
     value,
     variable;
 
-  if (isSymbol(x) && x[0] !== '"') {
+  if (LSymbol.isSymbol(x)) {
     return context.find(x)[x];
   }
 
@@ -52,37 +57,36 @@ var evaluate = function(x, context = globalContext) {
     return x;
   }
 
-  else if (x[0] === 'quote') {
+  else if (equal(x[0], _quote)) {
     return x[1];
   }
 
-  else if (x[0] === 'if') {
+  else if (equal(x[0], _if)) {
     [__, pred, then, els] = x;
-    return evaluate(evaluate(pred, context) ? then : els, context);
+    // Get valueOf since object (wrappers) are always truthy
+    return evaluate(evaluate(pred, context).valueOf() ? then : els, context);
   }
 
-  else if (x[0] === 'def') {
+  else if (equal(x[0], _def)) {
     [__, variable, value] = x;
     context.def(variable, evaluate(value));
     return undefined;
   }
 
-  else if (x[0] === 'lambda') {
+  else if (equal(x[0], _lambda)) {
     [__, params, expr] = x;
-    return function() {
-      return evaluate(expr, Context(zipObject(params, arguments), context));
-    };
+    return (...args) => evaluate(expr, Context(zipObject(params, args), context));
   }
 
-  else if (x[0] === 'do') {
+  else if (equal(x[0], _do)) {
     [__, ...exprs] = x;
     return last(exprs.map(expr => evaluate(expr, context)));
   }
 
   else {
-    exprs = x.map(function(expr) { return evaluate(expr, context); });
+    exprs = x.map(expr => evaluate(expr, context));
     proc = exprs.shift();
-    return proc(...exprs);
+    return proc(...exprs).valueOf();
   }
 };
 
