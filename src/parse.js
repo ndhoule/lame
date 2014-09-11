@@ -1,12 +1,7 @@
 import { LBoolean, LNumber, LString, LSymbol } from './types';
 
-var isStringLiteral = function(string) {
-  return string[0] === '"' && string[string.length - 1] === '"';
-};
-
-var isNumeric = function(string) {
-  return !isNaN(Number(string));
-};
+var isStringLiteral = (string) => string[0] === '"' && string[string.length - 1] === '"';
+var isNumberLiteral = (string) => !isNaN(Number(string));
 
 /**
  * Accepts a string and converts it to its appropriate datatype.
@@ -22,7 +17,7 @@ var atomize = function(token) {
     return LBoolean(token);
   } else if (isStringLiteral(token)) {
     return LString(token);
-  } else if (isNumeric(token)) {
+  } else if (isNumberLiteral(token)) {
     return LNumber(token);
   } else {
     return LSymbol(token);
