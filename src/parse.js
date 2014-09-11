@@ -40,6 +40,10 @@ var parse = function(tokens) {
 
   var token = tokens.shift();
 
+  if (token === '') {
+    throw new SyntaxError('Unexpected empty token');
+  }
+
   // Expand shorthand quote forms, e.g. '(1 2 3) => (quot (1 2 3))
   if (token === '\'') {
     return [LSymbol('quote'), parse(tokens)];
