@@ -7,6 +7,7 @@ import { LAtom, LSymbol } from './types';
 var equal = LAtom.equal;
 
 var _quote = LSymbol('quote');
+var _quoteChar = LSymbol('\'');
 var _if = LSymbol('if');
 var _def = LSymbol('def');
 var _lambda = LSymbol('lambda');

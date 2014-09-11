@@ -30,19 +30,50 @@ var parse = function(tokens) {
 
   var token = tokens.shift();
 
+  // Expand shorthand quote forms, e.g. '(1 2 3) => (quot (1 2 3))
+  if (token === '\'') {
+    // Begin an quoted form; we're going to figure out where to insert the closing paren
+    token = '(';
+    tokens.unshift('quote');
+
+    var insertAt = 2;
+
+    // If we're quoting a list, find where to add a close parenthesis
+    if (tokens[1] === '(') {
+      // Maintain a stack of all open parens so we can find `tokens[0]`'s matching close paren
+      var openParens = 1;
+
+      while (insertAt < tokens.length) {
+        if (tokens[insertAt] === '(') {
+          openParens += 1;
+        } else if (tokens[insertAt] === ')') {
+          if (!(openParens -= 1)) {
+            // Stack is empty, we've found the matching close paren
+            break;
+          }
+        }
+
+        insertAt += 1;
+      }
+    }
+
+    // Insert the closing parenthesis
+    tokens.splice(insertAt, 0, ')');
+  }
+
   if (token === '(') {
-    var l = [];
+    var list = [];
 
     while (tokens[0] !== ')') {
-      l.push(parse(tokens));
+      list.push(parse(tokens));
     }
 
     // Remove trailing ')'
     tokens.shift();
 
-    return l;
+    return list;
   } else if (token === ')') {
-    throw new TypeError('Unexpected )');
+    throw new SyntaxError('Unexpected )');
   } else {
     return atomize(token);
   }
