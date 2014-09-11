@@ -12,13 +12,13 @@ var isNumeric = function(string) {
 // TODO: Make the lexer do more goddamned work for us
 var atomize = function(token) {
   if (token === 'true' || token === 'false') {
-    return new LBoolean(token);
+    return LBoolean(token);
   } else if (isStringLiteral(token)) {
-    return new LString(token);
+    return LString(token);
   } else if (isNumeric(token)) {
-    return new LNumber(token);
+    return LNumber(token);
   } else {
-    return new LSymbol(token);
+    return LSymbol(token);
   }
 };
 

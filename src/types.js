@@ -1,77 +1,86 @@
 /**
  * Base class. All other types inherit from this class.
- *
- * @class LAtom
  */
 
-export class LAtom extends null {
-  constructor(value) {
-    Object.defineProperty(this, '_value', { value: value });
-  }
+var lAtom = Object.create(null);
 
-  valueOf() {
-    return this._value;
-  }
-}
+lAtom.valueOf = function() {
+  return this._value;
+};
 
-LAtom.equal = function(a, b) { return a.constructor === b.constructor && a.valueOf() === b.valueOf(); };
+export var LAtom = function(value) {
+  return Object.create(lAtom, { '_value': { value: value } });
+};
 
-LAtom.isAtom = value => value instanceof LAtom;
+LAtom.isAtom = value => Object.getPrototypeOf(value) === lAtom;
 
+LAtom.equal = (a, b) => {
+  return Object.getPrototypeOf(a) === Object.getPrototypeOf(b) && a.valueOf() === b.valueOf();
+};
+
+Object.freeze(lAtom);
 Object.freeze(LAtom);
 
 
 /**
- * @class LSymbol
+ * LSymbol
  */
 
-export class LSymbol extends LAtom {}
+var lSymbol = Object.create(lAtom);
+
+export var LSymbol = function(value) {
+  return Object.create(lSymbol, { '_value': { value: value } });
+};
 
 // This should return true for all values
-LSymbol.isSymbol = value => value instanceof LSymbol;
+LSymbol.isSymbol = value => Object.getPrototypeOf(value) === lSymbol;
 
+Object.freeze(lSymbol);
 Object.freeze(LSymbol);
 
 /**
- * @class LNumber
+ * LNumber
  */
 
-export class LNumber extends LAtom {
-  constructor(value) {
-    Object.defineProperty(this, '_value', { value: Number(value) });
-  }
-}
+var lNumber = Object.create(lAtom);
 
-LNumber.isNumber = value => value instanceof LNumber;
+export var LNumber = function(value) {
+  return Object.create(lNumber, { '_value': { value: Number(value) } });
+};
 
+LNumber.isNumber = value => Object.getPrototypeOf(value) === lNumber;
+
+Object.freeze(lNumber);
 Object.freeze(LNumber);
 
 
 /**
- * @class LString
+ * LString
  */
 
-export class LString extends LAtom {
-  constructor(value) {
-    Object.defineProperty(this, '_value', { value: String(value) });
-  }
-}
+var lString = Object.create(lAtom);
 
-LString.isString = value => value instanceof LString;
+export var LString = function(value) {
+  return Object.create(lString, { '_value': { value: String(value) } });
+};
 
+LString.isString = value => Object.getPrototypeOf(value) === lString;
+
+Object.freeze(lString);
 Object.freeze(LString);
 
 
 /**
- * @class LBoolean
+ * LBoolean
  */
 
-export class LBoolean extends LAtom {
-  constructor(value) {
-    Object.defineProperty(this, '_value', { value: value === 'false' ? false : Boolean(value) });
-  }
-}
+var lBoolean = Object.create(lAtom);
 
-LBoolean.isBoolean = value => value instanceof LBoolean;
+export var LBoolean = function(value) {
+  return Object.create(lBoolean, { '_value': { value: value === 'false' ? false : Boolean(value) } });
+};
 
+LBoolean.isBoolean = value => Object.getPrototypeOf(value) === lBoolean;
+
+Object.freeze(lBoolean);
 Object.freeze(LBoolean);

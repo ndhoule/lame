@@ -6,11 +6,11 @@ import { LAtom, LSymbol } from './types';
 
 var equal = LAtom.equal;
 
-var _quote = new LSymbol('quote');
-var _if = new LSymbol('if');
-var _def = new LSymbol('def');
-var _lambda = new LSymbol('lambda');
-var _do = new LSymbol('do');
+var _quote = LSymbol('quote');
+var _if = LSymbol('if');
+var _def = LSymbol('def');
+var _lambda = LSymbol('lambda');
+var _do = LSymbol('do');
 
 // Create a global context with primitive globals.
 var globalContext = Context({
