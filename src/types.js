@@ -1,7 +1,3 @@
-// TODO: Types:
-// - List
-// - Function
-
 /**
  * Atom. Base class. All other types inherit from this class.
  */

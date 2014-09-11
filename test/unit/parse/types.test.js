@@ -1,8 +1,17 @@
 import lame from '../../../src/index';
 
 describe('parse » types', function() {
-  // TODO: Write tests
-  xdescribe('LAtom', function() {});
+  /**
+   * TODO:
+   *
+   * Types to implement:
+   * - List
+   * - Function
+   *
+   * Tests to write:
+   * - Tests for LAtom
+   * - Tests for (type "str"), (type 3), etc.
+   */
 
   describe('LBoolean', function() {
     it('should interpret `true` as a boolean', function() {
