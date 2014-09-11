@@ -71,7 +71,9 @@ var evaluate = function(x, context = globalContext) {
   else if (equal(x[0], _def)) {
     [__, variable, value] = x;
     context.def(variable, evaluate(value));
-    return undefined;
+    // Return the name of the instantiated variable.
+    // TODO: Return a symbol instead
+    return `#${variable}`;
   }
 
   else if (equal(x[0], _lambda)) {
