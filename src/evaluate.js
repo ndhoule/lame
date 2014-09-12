@@ -3,8 +3,7 @@ import Context from './context';
 import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
 import { LAtom, LSymbol, LNil } from './types';
-
-var isFunction = val => typeof val === 'function';
+import { isFunction } from './utils';
 
 var equal = LAtom.equal;
 

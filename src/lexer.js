@@ -1,3 +1,5 @@
+import { isString } from './utils';
+
 /**
  * Special Characters
  */
@@ -141,18 +143,6 @@ var getNextTokenBoundaries = function(string, start = 0) {
   }
 
   return [start, end];
-};
-
-// TODO: Move to utility file
-/**
- * Predicate function that determines if a value is a string.
- *
- * @function isString
- * @param {*} val The value to test.
- * @return {boolean} Returns true if `val` is a string, and false otherwise.
- */
-var isString = function(val) {
-  return typeof val === 'string' || Object.prototype.toString.call(val) === '[object String]';
 };
 
 /**
