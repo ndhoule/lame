@@ -4,6 +4,8 @@ import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
 import { LAtom, LSymbol, LNil } from './types';
 
+var isFunction = val => typeof val === 'function';
+
 var equal = LAtom.equal;
 
 var _cond = LSymbol('cond');
@@ -94,6 +96,11 @@ var evaluate = function(x, context = globalContext) {
   else {
     exprs = x.map(expr => evaluate(expr, context));
     proc = exprs.shift();
+
+    if (!isFunction(proc)) {
+      throw new SyntaxError(`Expected a function but instead saw ${proc.valueOf()}`);
+    }
+
     return proc(...exprs).valueOf();
   }
 };
