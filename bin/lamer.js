@@ -21,7 +21,7 @@ if (argv[0]) {
         throw err;
       }
 
-      process.stdout.write(lame.eval(source).toString() + '\n');
+      console.log(lame.eval(source));
     });
   });
 } else {
