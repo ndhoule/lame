@@ -1,0 +1,4 @@
+(cond (false "first")
+      ((= 1 (+ 1 2)) "second")
+      ((= 1 (+ 1 2)) (quote "third"))
+      (true "last"))

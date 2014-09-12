@@ -80,7 +80,7 @@ var evaluate = function(x, context = globalContext) {
   else if (equal(x[0], _cond)) {
     exprs = x.slice(1);
     for (expr of exprs) {
-      if (evaluate(expr[0], context)) {
+      if (evaluate(expr[0], context).valueOf()) {
         return evaluate(expr[1], context);
       }
     }
