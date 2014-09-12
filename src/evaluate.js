@@ -2,13 +2,13 @@ import * as core from './core';
 import Context from './context';
 import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
-import { LAtom, LSymbol } from './types';
+import { LAtom, LSymbol, LNil } from './types';
 
 var equal = LAtom.equal;
 
+var _cond = LSymbol('cond');
 var _def = LSymbol('def');
 var _do = LSymbol('do');
-var _if = LSymbol('if');
 var _lambda = LSymbol('lambda');
 var _quote = LSymbol('quote');
 var _quoteChar = LSymbol('\'');
@@ -63,12 +63,6 @@ var evaluate = function(x, context = globalContext) {
     return x[1];
   }
 
-  else if (equal(x[0], _if)) {
-    [__, pred, then, els] = x;
-    // Get valueOf since object (wrappers) are always truthy
-    return evaluate(evaluate(pred, context).valueOf() ? then : els, context);
-  }
-
   else if (equal(x[0], _def)) {
     [__, variable, value] = x;
     context.def(variable, evaluate(value));
@@ -80,6 +74,16 @@ var evaluate = function(x, context = globalContext) {
   else if (equal(x[0], _lambda)) {
     [__, params, expr] = x;
     return (...args) => evaluate(expr, Context(zipObject(params, args), context));
+  }
+
+  else if (equal(x[0], _cond)) {
+    exprs = x.slice(1);
+    for (expr of exprs) {
+      if (evaluate(expr[0], context)) {
+        return evaluate(expr[1], context);
+      }
+    }
+    return LNil();
   }
 
   else if (equal(x[0], _do)) {

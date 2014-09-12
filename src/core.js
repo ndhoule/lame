@@ -18,7 +18,7 @@ export var first = (list) => list[0];
 
 export var rest = (list) => list.slice(1);
 
-export var eq = (x, y) => x === y;
+export var eq = (x, y) => x.valueOf() === y.valueOf();
 
 export var list = (...elems) => elems;
 

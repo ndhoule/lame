@@ -1,0 +1,8 @@
+; Using cond
+(do
+  (cond ((= 1 2) "First cond satisfied")
+        ((= 4 (+ 2 3) ) "Second cond satisfied")
+        ((= 2 (+ 2 3) ) "Third cond satisfied")
+        (true "fallback")
+  )
+)

@@ -1,0 +1,7 @@
+; Implement `if` using `cond`
+(do
+  (def if
+    (lambda (pred con alt)
+            (cond ((pred) con)
+                  (true alt))))
+)
