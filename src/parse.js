@@ -1,4 +1,4 @@
-import { LBoolean, LNumber, LString, LSymbol } from './types';
+import { LBoolean, LNil, LNumber, LString, LSymbol } from './types';
 
 var isStringLiteral = (string) => string[0] === '"' && string[string.length - 1] === '"';
 var isNumberLiteral = (string) => !isNaN(Number(string));
@@ -13,7 +13,9 @@ var isNumberLiteral = (string) => !isNaN(Number(string));
 // This would be a lot goddamned easier if the lexer did more work
 // TODO: Make the lexer do more goddamned work for us
 var atomize = function(token) {
-  if (token === 'true' || token === 'false') {
+  if (token === 'nil') {
+    return LNil();
+  } else if (token === 'true' || token === 'false') {
     return LBoolean(token);
   } else if (isStringLiteral(token)) {
     return LString(token);

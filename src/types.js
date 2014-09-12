@@ -109,3 +109,23 @@ export var LBoolean = function(value) {
 LBoolean.isBoolean = value => Object.getPrototypeOf(value) === lBoolean;
 
 Object.freeze(LBoolean);
+
+
+/**
+ * LNil
+ */
+
+var lNil = Object.create(lAtom);
+
+Object.freeze(lNil);
+
+export var LNil = function() {
+  return Object.create(lNil, {
+    '_type': { value: 'nil' },
+    '_value': { value: null }
+  });
+};
+
+LNil.isNil = value => Object.getPrototypeOf(value) === lNil;
+
+Object.freeze(LNil);

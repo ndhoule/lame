@@ -38,6 +38,16 @@ describe('parse » types', function() {
     });
   });
 
+  describe('LNil', function() {
+    it('should interpret `nil` as null', function() {
+      var result = lame.eval('nil');
+      var result2 = lame.eval('(list 1 2 nil)');
+
+      expect(result).to.be.null;
+      expect(result2).to.deep.equal([1, 2, null]);
+    });
+  });
+
   describe('LNumber', function() {
     it('should interpret numeric input as numbers', function() {
       expect(lame.eval('1')).to.equal(1);
