@@ -21,6 +21,8 @@ I wanted to write a lexer and a compiler. And a language. And a cure for world h
 
 ### Disclaimer
 
+This is very unfinished. There are plenty of edge cases, places where behavior is weird or dumb, etc.
+
 Sweet Jesus, please don't use this for anything important.
 
 
