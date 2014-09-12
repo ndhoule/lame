@@ -1,6 +1,6 @@
 import lame from '../../../src/index';
 
-describe('primitives » def', function() {
+describe('core » s-functions » def', function() {
   it('should evaluate a variable into the root context', function() {
     var code = chai.loadFixture('def/root-context');
     var result = lame.eval(code);

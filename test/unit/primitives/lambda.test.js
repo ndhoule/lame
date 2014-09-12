@@ -1,6 +1,6 @@
 import lame from '../../../src/index';
 
-describe('primitives » lambda', function() {
+describe('core » s-functions » lambda', function() {
   it('should compile a lamba expression', function() {
     var results = lame.eval('(lambda (x) (* x x))');
 
