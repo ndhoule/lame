@@ -1,3 +1,5 @@
+import { LNil } from './types';
+
 export var add = (...exprs) => exprs.reduce((acc, val) => acc + val);
 
 export var divide = (...exprs) => exprs.reduce((acc, val) => acc / val);
@@ -14,7 +16,7 @@ export var gt = (a, b) => a > b;
 
 export var gte = (a, b) => a >= b;
 
-export var first = (list) => list[0];
+export var first = (list) => list.length !== 0 ? list[0] : LNil();
 
 export var rest = (list) => list.slice(1);
 
