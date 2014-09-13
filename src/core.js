@@ -1,4 +1,4 @@
-import { LNil } from './types';
+import { LNil, LString } from './types';
 
 export var add = (...exprs) => exprs.reduce((acc, val) => acc + val);
 
@@ -32,4 +32,4 @@ export var cons = (a, b) => {
   return [a, ...b];
 };
 
-export var type = (value) => value._type;
+export var type = (value) => LString(value._type);
