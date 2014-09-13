@@ -16,9 +16,9 @@ export var gt = (a, b) => a > b;
 
 export var gte = (a, b) => a >= b;
 
-export var first = (list) => list.length !== 0 ? list[0] : LNil();
+export var car = (list) => list.length !== 0 ? list[0] : LNil();
 
-export var rest = (list) => list.slice(1);
+export var cdr = (list) => list.slice(1);
 
 export var eq = (x, y) => x.valueOf() === y.valueOf();
 
