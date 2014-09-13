@@ -100,7 +100,7 @@ var evaluate = function(x, context = globalContext) {
       throw new SyntaxError(`Expected a function but instead saw ${proc.valueOf()}`);
     }
 
-    return proc(...exprs).valueOf();
+    return proc(...exprs);
   }
 };
 
