@@ -2,10 +2,11 @@ import lame from '../../../src/index';
 
 describe('core » s-functions » cond', function() {
   it('should return the first clause\'s `expr` for which the `test` evaluates to truthy', function() {
-    var simple = lame.eval(chai.loadFixture('cond/simple'));
-    var simpleExpected = '"first"';
+    var code = chai.loadFixture('cond/simple');
+    var result = lame.eval(code);
+    var expected = '"first"';
 
-    expect(simple).to.equal(simpleExpected);
+    expect(result).to.equal(expected);
   });
 
   it('should work when given multiple clauses', function() {
