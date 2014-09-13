@@ -25,12 +25,15 @@ var globalContext = Context({
   '<=': core.lte,
   '>': core.gt,
   '>=': core.gte,
-  'car': core.first,
   'cons': core.cons,
   'first': core.first,
   'list': core.list,
   'rest': core.rest,
-  'type': core.type
+  'type': core.type,
+
+  // Aliases
+  'car': core.first,
+  'cdr': core.rest
 });
 
 /**
