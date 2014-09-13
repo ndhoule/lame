@@ -25,10 +25,11 @@ var globalContext = Context({
   '<=': core.lte,
   '>': core.gt,
   '>=': core.gte,
+  'car': core.first,
   'cons': core.cons,
   'first': core.first,
-  'rest': core.rest,
   'list': core.list,
+  'rest': core.rest,
   'type': core.type
 });
 

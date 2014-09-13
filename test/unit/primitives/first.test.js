@@ -15,4 +15,12 @@ describe('core » s-functions » first', function() {
 
     expect(results).to.be.null;
   });
+
+  it('should be aliased as `car`', function() {
+    var code = '(car \'(1 2 3))';
+    var results = lame.eval(code);
+    var expected = 1;
+
+    expect(results).to.equal(expected);
+  });
 });
