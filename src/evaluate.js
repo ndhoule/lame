@@ -12,7 +12,6 @@ var _def = LSymbol('def');
 var _do = LSymbol('do');
 var _lambda = LSymbol('lambda');
 var _quote = LSymbol('quote');
-var _quoteChar = LSymbol('\'');
 
 // Create a global context with primitive globals.
 var globalContext = Context({
@@ -44,16 +43,7 @@ var globalContext = Context({
  * @return {*} The results of invoking the expression.
  */
 var evaluate = function(x, context = globalContext) {
-  var __,
-    els,
-    expr,
-    exprs,
-    params,
-    pred,
-    proc,
-    then,
-    value,
-    variable;
+  var __, expr, exprs, params, proc, value, variable;
 
   if (LSymbol.isSymbol(x)) {
     return context.find(x)[x];
