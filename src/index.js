@@ -1,5 +1,6 @@
 import Lexer from './lexer';
 import evaluate from './evaluate';
+import expand from './expand';
 import parse from './parse';
 
 // In Lame, all values are wrapped in object wrappers that correspond to their type. In order to
@@ -10,7 +11,7 @@ var toJS = function(value) {
 
 var lame = {
   eval(code) {
-    return toJS(evaluate(parse(Lexer.tokenize(code))));
+    return toJS(evaluate(expand(parse(Lexer.tokenize(code)))));
   }
 };
 

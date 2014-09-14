@@ -25,6 +25,7 @@ var globalContext = Context({
   '>=': core.gte,
   'car': core.car,
   'cdr': core.cdr,
+  'concat': core.concat,
   'cons': core.cons,
   'list': core.list,
   'type': core.type,

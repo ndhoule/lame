@@ -3,6 +3,13 @@ import { LBoolean, LNil, LNumber, LString, LSymbol } from './types';
 var isStringLiteral = (string) => string[0] === '"' && string[string.length - 1] === '"';
 var isNumberLiteral = (string) => !isNaN(Number(string));
 
+var quotes = Object.create(null, {
+  '\'': { value: LSymbol('quote') },
+  '`': { value: LSymbol('quasiquote') },
+  '~': { value: LSymbol('unquote') },
+  '~@': { value: LSymbol('unquote-splice') }
+});
+
 /**
  * Accepts a string and converts it to its appropriate datatype.
  *
@@ -46,9 +53,11 @@ var parse = function(tokens) {
 
   var token = tokens.shift();
 
+  // TODO: CLEAN UP
   // Expand shorthand quote forms, e.g. '(1 2 3) => (quot (1 2 3))
-  if (token === '\'') {
-    return [LSymbol('quote'), parse(tokens)];
+
+  if (token in quotes) {
+    return [quotes[token], parse(tokens)];
   }
 
   if (token === '(') {

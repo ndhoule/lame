@@ -32,4 +32,8 @@ export var cons = LFunction((a, b) => {
   return [a, ...b];
 });
 
+export var concat = LFunction(function() {
+ return Array.prototype.concat.apply([], arguments);
+});
+
 export var type = LFunction((value) => LString(value._type));
