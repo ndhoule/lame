@@ -3,14 +3,10 @@ import Context from './context';
 import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
 import { LAtom, LFunction, LSymbol, LNil } from './types';
+import { _cond, _def, _do, _lambda, _quote } from './symbols';
 
 var equal = LAtom.equal;
 
-var _cond = LSymbol('cond');
-var _def = LSymbol('def');
-var _do = LSymbol('do');
-var _lambda = LSymbol('lambda');
-var _quote = LSymbol('quote');
 
 // Create a global context with primitive globals.
 var globalContext = Context({

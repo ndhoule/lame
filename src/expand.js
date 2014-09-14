@@ -1,13 +1,6 @@
 import { concat, cons } from './core';
 import { LAtom, LSymbol } from './types';
-
-var toJS = function(value) { return Array.isArray(value) ? value.map(toJS) : value.valueOf(); };
-var log = function(value) { console.log(toJS(value)); };
-
-// TODO: Cleanup
-var _quasiquote = LSymbol('quasiquote');
-var _unquote = LSymbol('unquote');
-var _unquoteSplice = LSymbol('unquote-splice');
+import { _quasiquote, _unquote, _unquoteSplice } from './symbols';
 
 var expand = function(x, toplevel = false) {
   if (!Array.isArray(x)) {

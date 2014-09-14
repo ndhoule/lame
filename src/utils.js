@@ -17,3 +17,20 @@ export var isString = function(val) {
  * @return {boolean} Returns true if `val` is a function, and false otherwise.
  */
 export var isFunction = val => typeof val === 'function';
+
+/**
+ * Converts Lame data structure(s) to a JavaScript-readable structure. Basically, just recursively
+ * unboxes values from their wrapper objects.
+ *
+ * @param {*} value A single or array of Lame data structures.
+ * @return {*} Returns a single or list of JavaScript values.
+ */
+export var toJS = (value) => Array.isArray(value) ? value.map(toJS) : value.valueOf();
+
+/**
+ * Converts Lame data structure(s) to a JavaScript-readable structure.
+ *
+ * @param value
+ * @return {undefined} Returns undefined, logs information to the scren.
+ */
+export var log = (value) => console.log(toJS(value));
