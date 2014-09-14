@@ -32,6 +32,12 @@ Sweet Jesus, please don't use this for anything important.
 npm install git+https://github.com/ndhoule/lame.git#dev
 ```
 
+### Load a File
+
+```sh
+node_modules/.bin/lamer path/to/filename.lame
+```
+
 ### REPL
 
 ```sh
