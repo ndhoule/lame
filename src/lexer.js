@@ -135,7 +135,7 @@ var getNextTokenBoundaries = function(string, start = 0) {
         // Unquote
         end += 1;
 
-        if (string.charCodeAt(end + 1) === AT_SYMBOL) {
+        if (string.charCodeAt(end) === AT_SYMBOL) {
           // Unquote splice
           end += 1;
         }

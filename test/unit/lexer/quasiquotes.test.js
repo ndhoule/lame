@@ -18,7 +18,7 @@ describe('lexer » unquote', function() {
   });
 });
 
-xdescribe('lexer » unquote-splicing', function() {
+describe('lexer » unquote-splicing', function() {
   it('should lex the tilde-at (~@) as a token', function() {
     var code = '`(+ 1 ~@(list 1 2))';
     var expected = ['`', '(', '+', '1', '~@', '(', 'list', '1', '2',')', ')'];
