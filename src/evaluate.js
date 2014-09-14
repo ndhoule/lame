@@ -91,7 +91,7 @@ var evaluate = function(x, context = globalContext) {
     proc = exprs.shift();
 
     if (!LFunction.isFunction(proc)) {
-      throw new SyntaxError(`Expected a function but instead saw ${proc.valueOf()}`);
+      throw new SyntaxError(`Expected a function but instead received a ${core.type(proc)}`);
     }
 
     return proc.invoke(...exprs);

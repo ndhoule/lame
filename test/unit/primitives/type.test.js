@@ -51,5 +51,11 @@ describe('core » s-functions » type', function() {
 
   xit('should return the type from list wrappers', function() {});
 
-  xit('should return the type from function wrappers', function() {});
+  it('should return the type from function wrappers', function() {
+    var code = '(type (lambda (x) (* x x)))';
+    var result = lame.eval(code);
+    var expected = 'function';
+
+    expect(result).to.equal(expected);
+  });
 });
