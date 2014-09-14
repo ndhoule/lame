@@ -2,7 +2,7 @@ import * as core from './core';
 import Context from './context';
 import last from 'lodash.last';
 import zipObject from 'lodash.zipobject';
-import { LAtom, LSymbol, LNil } from './types';
+import { LAtom, LFunction, LSymbol, LNil } from './types';
 import { isFunction } from './utils';
 
 var equal = LAtom.equal;
@@ -46,10 +46,9 @@ var evaluate = function(x, context = globalContext) {
   var __, expr, exprs, params, proc, value, variable;
 
   if (LSymbol.isSymbol(x)) {
-    return context.find(x)[x];
+    return context.find(x);
   }
 
-  // Is an atom
   else if (!Array.isArray(x)) {
     return x;
   }
@@ -58,6 +57,7 @@ var evaluate = function(x, context = globalContext) {
     return x[1];
   }
 
+  // __proto__ problem
   else if (equal(x[0], _def)) {
     [__, variable, value] = x;
     context.def(variable, evaluate(value));
@@ -68,7 +68,7 @@ var evaluate = function(x, context = globalContext) {
 
   else if (equal(x[0], _lambda)) {
     [__, params, expr] = x;
-    return (...args) => evaluate(expr, Context(zipObject(params, args), context));
+    return LFunction((...args) => evaluate(expr, Context(zipObject(params, args), context)));
   }
 
   else if (equal(x[0], _cond)) {
@@ -90,11 +90,11 @@ var evaluate = function(x, context = globalContext) {
     exprs = x.map(expr => evaluate(expr, context));
     proc = exprs.shift();
 
-    if (!isFunction(proc)) {
+    if (!LFunction.isFunction(proc)) {
       throw new SyntaxError(`Expected a function but instead saw ${proc.valueOf()}`);
     }
 
-    return proc(...exprs);
+    return proc.invoke(...exprs);
   }
 };
 

@@ -1,3 +1,7 @@
+var isA = function(source) {
+  return (value) => Object.getPrototypeOf(value) === source;
+};
+
 /**
  * Atom. Base class. All other types inherit from this class.
  */
@@ -18,7 +22,7 @@ export var LAtom = function(value) {
   });
 };
 
-LAtom.isAtom = value => Object.getPrototypeOf(value) === lAtom;
+LAtom.isAtom = isA(lAtom);
 
 LAtom.equal = (a, b) => {
   return Object.getPrototypeOf(a) === Object.getPrototypeOf(b) && a.valueOf() === b.valueOf();
@@ -43,8 +47,7 @@ export var LSymbol = function(value) {
   });
 };
 
-// This should return true for all values
-LSymbol.isSymbol = value => Object.getPrototypeOf(value) === lSymbol;
+LSymbol.isSymbol = isA(lSymbol);
 
 Object.freeze(LSymbol);
 
@@ -64,7 +67,7 @@ export var LNumber = function(value) {
   });
 };
 
-LNumber.isNumber = value => Object.getPrototypeOf(value) === lNumber;
+LNumber.isNumber = isA(lNumber);
 
 Object.freeze(LNumber);
 
@@ -85,7 +88,7 @@ export var LString = function(value) {
   });
 };
 
-LString.isString = value => Object.getPrototypeOf(value) === lString;
+LString.isString = isA(lString);
 
 Object.freeze(LString);
 
@@ -106,7 +109,7 @@ export var LBoolean = function(value) {
   });
 };
 
-LBoolean.isBoolean = value => Object.getPrototypeOf(value) === lBoolean;
+LBoolean.isBoolean = isA(lBoolean);
 
 Object.freeze(LBoolean);
 
@@ -126,6 +129,32 @@ export var LNil = function() {
   });
 };
 
-LNil.isNil = value => Object.getPrototypeOf(value) === lNil;
+LNil.isNil = isA(lNil);
 
 Object.freeze(LNil);
+
+
+/**
+ * LFunction
+ */
+
+var lFunction = Object.create(lAtom);
+
+lFunction.invoke = function() {
+  return this._value.apply(null, arguments);
+};
+
+Object.freeze(lFunction);
+
+export var LFunction = function(fn) {
+  return Object.create(lFunction, {
+    // TODO
+    //'_arity': { value: xxx },
+    '_type': { value: 'function' },
+    '_value': { value: fn }
+  });
+};
+
+LFunction.isFunction = isA(lFunction);
+
+Object.freeze(LFunction);

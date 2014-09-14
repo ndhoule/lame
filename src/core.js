@@ -1,35 +1,35 @@
-import { LNil, LString } from './types';
+import { LFunction, LNil, LString } from './types';
 
-export var add = (...exprs) => exprs.reduce((acc, val) => acc + val);
+export var add = LFunction((...exprs) => exprs.reduce((acc, val) => acc + val));
 
-export var divide = (...exprs) => exprs.reduce((acc, val) => acc / val);
+export var divide = LFunction((...exprs) => exprs.reduce((acc, val) => acc / val));
 
-export var multiply = (...exprs) => exprs.reduce((acc, val) => acc * val);
+export var multiply = LFunction((...exprs) => exprs.reduce((acc, val) => acc * val));
 
-export var subtract = (...exprs) => exprs.reduce((acc, val) => acc - val);
+export var subtract = LFunction((...exprs) => exprs.reduce((acc, val) => acc - val));
 
-export var lt = (a, b) => a < b;
+export var lt = LFunction((a, b) => a < b);
 
-export var lte = (a, b) => a <= b;
+export var lte = LFunction((a, b) => a <= b);
 
-export var gt = (a, b) => a > b;
+export var gt = LFunction((a, b) => a > b);
 
-export var gte = (a, b) => a >= b;
+export var gte = LFunction((a, b) => a >= b);
 
-export var car = (list) => list.length !== 0 ? list[0] : LNil();
+export var car = LFunction((list) => list.length !== 0 ? list[0] : LNil());
 
-export var cdr = (list) => list.slice(1);
+export var cdr = LFunction((list) => list.slice(1));
 
-export var eq = (x, y) => x.valueOf() === y.valueOf();
+export var eq = LFunction((x, y) => x.valueOf() === y.valueOf());
 
-export var list = (...elems) => elems;
+export var list = LFunction((...elems) => elems);
 
-export var cons = (a, b) => {
+export var cons = LFunction((a, b) => {
   if (!Array.isArray(b)) {
     throw new TypeError('Expected a list');
   }
 
   return [a, ...b];
-};
+});
 
-export var type = (value) => LString(value._type);
+export var type = LFunction((value) => LString(value._type));

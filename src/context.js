@@ -3,7 +3,7 @@ import extend from 'lodash.assign';
 var context = {
   find(variable) {
     if (variable in this.locals) {
-      return this.locals;
+      return this.locals[variable];
     }
 
     if (this.parentContext !== null) {
