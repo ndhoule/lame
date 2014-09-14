@@ -2,7 +2,7 @@ import { concat, cons } from './core';
 import { LAtom, LSymbol } from './types';
 import { _quasiquote, _unquote, _unquoteSplice } from './symbols';
 
-var expand = function(x, toplevel = false) {
+var expand = function(x) {
   if (!Array.isArray(x)) {
     return x;
   }
