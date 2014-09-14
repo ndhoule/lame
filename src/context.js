@@ -1,6 +1,9 @@
 import extend from 'lodash.assign';
 
 var context = {
+  // FIXME: In Node (and some other environments) Object.create(null) still sets
+  // the __proto__ property. This lookup is subject to this problem. Fix by
+  // prefixing keys before insertion
   find(variable) {
     if (variable in this.locals) {
       return this.locals[variable];

@@ -56,7 +56,6 @@ var evaluate = function(x, context = globalContext) {
     return x[1];
   }
 
-  // __proto__ problem
   else if (equal(x[0], _def)) {
     [__, variable, value] = x;
     context.def(variable, evaluate(value));
