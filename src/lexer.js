@@ -13,7 +13,10 @@ var LEFT_PARENTHESIS = 40;
 var RIGHT_PARENTHESIS = 41;
 var COMMA = 44;
 var SEMICOLON = 59;
+var AT_SYMBOL = 64;
 var ESCAPE = 92;
+var BACKTICK = 96;
+var TILDE = 126;
 
 /**
  * Accepts a character code and determines if it is a whitespace character.
@@ -124,6 +127,20 @@ var getNextTokenBoundaries = function(string, start = 0) {
       if (char === DOUBLE_QUOTE) {
         // Begin string literal
         inStringLiteral = true;
+      } else if (char === BACKTICK) {
+        // Quasiquote
+        end += 1;
+        break;
+      } else if (char === TILDE) {
+        // Unquote
+        end += 1;
+
+        if (string.charCodeAt(end + 1) === AT_SYMBOL) {
+          // Unquote splice
+          end += 1;
+        }
+
+        break;
       } else if (char === SINGLE_QUOTE) {
         // Begin `quot`ed form
         end += 1;
